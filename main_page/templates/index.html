@@ -1,0 +1,57 @@
+<h3><strong>Онлайн магазин<strong></h3>
+<hr>
+<!--Вход/Выход--><!--Корзина-->
+{% if user.is_authenticated %}
+    <a href="/accounts/logout">Выход</a><br>
+
+    <a href="/cart">Корзина</a>
+
+{% else %}
+
+    <a href="/accounts/login">Вход</a>
+
+{% endif %}
+
+
+
+<!--Поле для поиска-->
+<hr>
+{{ currency_rate }}
+{{ weather }}
+<form action="/search" method="post">
+    {% csrf_token %} <!---Всегда если есть тег form-->
+    <input type="text" name="search" placeholder="Поиск...">
+    <button>Поиск</button>
+</form>
+<hr>
+
+<!--Отображение товаров и их цен-->
+{% for product in products %}
+    <a href="/product/{{ product.product_name }}/{{ product.id }}">{{ product.product_name }}</a>
+
+    {{ product.product_price }}<br>
+{% endfor %}
+<hr>
+<!--Отображение категорий-->
+{% for category in categories %}
+    <a href="/category/{{ category.id }}">{{ category.category_name }}</a><br>
+{% endfor %}
+<hr>
+
+<!--Отображение акций-->
+{% for sale in sales %}
+    {{ sale.sale_name }}<br>
+    {{ sale.sale_start_date }}<br>
+    {{ sale.sale_end_date }}<br>
+{% endfor %}
+
+<hr>
+<!--Отзывы-->
+<form method="POST">
+    {% csrf_token %}
+    <input type="email" name="mail" value="{{ user.email }}" ><br>
+    <textarea   name="message" cols="30" rows="5" placeholder="Введите ваше сообщение"></textarea><br>
+    <button>Отправить отзыв</button>
+</form>
+
+

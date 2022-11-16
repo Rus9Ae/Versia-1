@@ -1,0 +1,13 @@
+<h3>Название: {{ result_product }}<br></h3>
+Описание товара: {{ result_product.product_description }}<br>
+Цена: {{ result_product.product_price }}<br>
+Осталось: {{ result_product.product_quantity }}<br>
+<hr>
+
+<form action="/add_product/{{ result_product.id }}" method="post">
+    {% csrf_token %}
+    <input type="number" min="1" max="{{ current_product.product_quantity }}" name="count">
+
+    <button>В корзину</button>
+
+</form>
